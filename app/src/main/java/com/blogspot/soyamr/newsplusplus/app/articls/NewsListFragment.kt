@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.blogspot.soyamr.newsplusplus.R
@@ -24,7 +25,11 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
     private val viewModel: NewsListViewModel by viewModels()
     private val binding: FragmentNewsListBinding by viewBinding()
 
-    private val adapter = NewsAdapter()
+    private val onClick: (String) -> Unit = {
+        findNavController().navigate(NewsListFragmentDirections.actionNewsListFragmentToWebViewFragment(it))
+    }
+
+    private val adapter = NewsAdapter(onClick)
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

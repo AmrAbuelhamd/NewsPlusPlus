@@ -8,10 +8,10 @@ import com.blogspot.soyamr.newsplusplus.domain.model.Article
 /**
  * Adapter for the list of articles.
  */
-class NewsAdapter : PagingDataAdapter<Article, NewsViewHolder>(UIMODEL_COMPARATOR) {
+class NewsAdapter(private val onClick: (String) -> Unit) : PagingDataAdapter<Article, NewsViewHolder>(UIMODEL_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        return NewsViewHolder.create(parent)
+        return NewsViewHolder.create(parent,onClick)
     }
 
 

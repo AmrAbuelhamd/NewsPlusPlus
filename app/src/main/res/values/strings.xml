@@ -5,5 +5,6 @@
 
     <string name="retry">Retry</string>
     <string name="no_results">no results</string>
+    <string name="news_thumbnail">news thumbnail</string>
 
 </resources>
