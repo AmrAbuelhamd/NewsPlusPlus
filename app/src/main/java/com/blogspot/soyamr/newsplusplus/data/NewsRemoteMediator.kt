@@ -4,14 +4,11 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import com.blogspot.soyamr.newsplusplus.data.db.dao.ArticleDao
-import com.blogspot.soyamr.newsplusplus.data.db.dao.RemoteKeysDao
+import androidx.room.withTransaction
+import com.blogspot.soyamr.newsplusplus.data.db.NewsDataBase
 import com.blogspot.soyamr.newsplusplus.data.db.model.Article
 import com.blogspot.soyamr.newsplusplus.data.db.model.RemoteKeys
 import com.blogspot.soyamr.newsplusplus.data.network.NewsApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -19,8 +16,7 @@ private const val NEWS_STARTING_PAGE_INDEX = 1
 
 @OptIn(ExperimentalPagingApi::class)
 class NewsRemoteMediator(
-    private val articleDao: ArticleDao,
-    private val remoteKeysDao: RemoteKeysDao,
+    private val newsDataBase: NewsDataBase,
     private val service: NewsApi,
 ) : RemoteMediator<Int, Article>() {
 
@@ -68,23 +64,23 @@ class NewsRemoteMediator(
             val apiResponse = service.getNews(page)
 
             val articles = apiResponse.articles
-            val endOfPaginationReached = articles.isEmpty()
-//            repoDatabase.withTransaction {
-            GlobalScope.launch(Dispatchers.IO) {
-                // clear all tables in the database
-                if (loadType == LoadType.REFRESH) {
-                    remoteKeysDao.clearRemoteKeys()
-                    articleDao.deleteAll()
-                }
-                val prevKey = if (page == NEWS_STARTING_PAGE_INDEX) null else page - 1
-                val nextKey = if (endOfPaginationReached) null else page + 1
+            val endOfPaginationReached = articles.isEmpty() || page == 5
+            newsDataBase.withTransaction {
+                with(newsDataBase) {
+                    // clear all tables in the database
+                    if (loadType == LoadType.REFRESH) {
+                        keysDao().clearRemoteKeys()
+                        articleDao().deleteAll()
+                    }
+                    val prevKey = if (page == NEWS_STARTING_PAGE_INDEX) null else page - 1
+                    val nextKey = if (endOfPaginationReached) null else page + 1
 
-                val articlesIds = articleDao.insertAll(articles.map { it.toDb() })
-                val keys = articlesIds.map {
-                    RemoteKeys(it, prevKey, nextKey)
+                    val articlesIds = articleDao().insertAll(articles.map { it.toDb() })
+                    val keys = articlesIds.map {
+                        RemoteKeys(it, prevKey, nextKey)
+                    }
+                    keysDao().insertAll(keys)
                 }
-                remoteKeysDao.insertAll(keys)
-//            }
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: IOException) {
@@ -100,7 +96,7 @@ class NewsRemoteMediator(
         return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { repo ->
                 // Get the remote keys of the last item retrieved
-                remoteKeysDao.remoteKeysArticleId(repo.id)
+                newsDataBase.keysDao().remoteKeysArticleId(repo.id)
             }
     }
 
@@ -110,7 +106,7 @@ class NewsRemoteMediator(
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
             ?.let { article ->
                 // Get the remote keys of the first items retrieved
-                remoteKeysDao.remoteKeysArticleId(article.id)
+                newsDataBase.keysDao().remoteKeysArticleId(article.id)
             }
     }
 
@@ -121,7 +117,7 @@ class NewsRemoteMediator(
         // Get the item closest to the anchor position
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { articleId ->
-                remoteKeysDao.remoteKeysArticleId(articleId)
+                newsDataBase.keysDao().remoteKeysArticleId(articleId)
             }
         }
     }

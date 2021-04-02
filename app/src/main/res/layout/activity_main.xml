@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".app.MainActivity">
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="50dp"
-        android:text="activity"/>
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"

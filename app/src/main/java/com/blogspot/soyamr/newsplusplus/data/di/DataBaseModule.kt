@@ -22,13 +22,4 @@ class DataBaseModule {
             context,
             NewsDataBase::class.java, "news-database"
         ).fallbackToDestructiveMigration().build()
-
-    @Provides
-    @Singleton
-    fun getArticleDao(db: NewsDataBase): ArticleDao = db.articleDao()
-
-    @Provides
-    @Singleton
-    fun getKeysDao(db: NewsDataBase): RemoteKeysDao = db.keysDao()
-
 }
