@@ -8,7 +8,7 @@ import com.blogspot.soyamr.newsplusplus.data.db.model.Article
 import com.blogspot.soyamr.newsplusplus.data.db.model.RemoteKeys
 
 
-@Database(entities = [Article::class, RemoteKeys::class], version = 3)
+@Database(entities = [Article::class, RemoteKeys::class], version = 4)
 abstract class NewsDataBase : RoomDatabase() {
     abstract fun articleDao(): ArticleDao
     abstract fun keysDao(): RemoteKeysDao

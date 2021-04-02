@@ -8,7 +8,7 @@ import com.blogspot.soyamr.newsplusplus.domain.model.Article as domainArticle
 data class Article(
     val description: String,
     val publishedAt: String,
-    val title: String,
+    val title: String?,
     val url: String,
     val urlToImage: String?,
     @PrimaryKey(autoGenerate = true) val id: Long = 0

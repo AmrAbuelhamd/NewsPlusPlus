@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/webViewFragment"
-        android:name="com.blogspot.soyamr.newsplusplus.WebViewFragment"
+        android:name="com.blogspot.soyamr.newsplusplus.app.WebViewFragment"
         android:label="fragment_web_view"
         tools:layout="@layout/fragment_web_view" >
         <argument

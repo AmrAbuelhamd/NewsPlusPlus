@@ -1,4 +1,4 @@
-package com.blogspot.soyamr.newsplusplus
+package com.blogspot.soyamr.newsplusplus.app
 
 import android.os.Bundle
 import android.view.View
@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.blogspot.soyamr.newsplusplus.R
 import com.blogspot.soyamr.newsplusplus.databinding.FragmentWebViewBinding
 
 

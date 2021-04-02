@@ -26,7 +26,11 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
     private val binding: FragmentNewsListBinding by viewBinding()
 
     private val onClick: (String) -> Unit = {
-        findNavController().navigate(NewsListFragmentDirections.actionNewsListFragmentToWebViewFragment(it))
+        findNavController().navigate(
+            NewsListFragmentDirections.actionNewsListFragmentToWebViewFragment(
+                it
+            )
+        )
     }
 
     private val adapter = NewsAdapter(onClick)
@@ -34,11 +38,6 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        // add dividers between RecyclerView's row items
-//        val decoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-//        binding.list.addItemDecoration(decoration)
-
 
         initAdapter()
         getNews()
@@ -65,6 +64,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
         }
     }
 
+    private var toast: Toast? = null
 
     private fun initAdapter() {
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
@@ -90,11 +90,14 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
                 ?: loadState.append as? LoadState.Error
                 ?: loadState.prepend as? LoadState.Error
             errorState?.let {
-                Toast.makeText(
+                toast?.cancel()
+                toast = Toast.makeText(
                     requireContext(),
                     "\uD83D\uDE28 Wooops ${it.error}",
-                    Toast.LENGTH_LONG
-                ).show()
+                    Toast.LENGTH_SHORT
+                )
+                toast?.show()
+
             }
         }
     }

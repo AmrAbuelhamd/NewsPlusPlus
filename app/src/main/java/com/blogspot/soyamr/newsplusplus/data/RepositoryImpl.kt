@@ -27,7 +27,7 @@ class RepositoryImpl @Inject constructor(
             ),
             remoteMediator = NewsRemoteMediator(newsDataBase, api),
             pagingSourceFactory = pagingSourceFactory
-        ).flow.map { it -> it.map { it.toDomain() } }
+        ).flow.map { it -> it.map { it.toDomain().copy(publishedAt = it.publishedAt.take(10)) } }
     }
 
 }
