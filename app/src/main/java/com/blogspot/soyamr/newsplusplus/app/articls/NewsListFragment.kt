@@ -38,7 +38,13 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
         initAdapter()
         getNews()
         binding.retryButton.setOnClickListener { adapter.retry() }
+        initSwipeRefresh()
+    }
 
+    private fun initSwipeRefresh() {
+        binding.swiperefresh.setOnRefreshListener {
+            adapter.refresh()
+        }
     }
 
 
@@ -69,6 +75,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
             // Only show the list if refresh succeeds.
             binding.list.isVisible = loadState.mediator?.refresh is LoadState.NotLoading
             // Show loading spinner during initial load or refresh.
+            binding.swiperefresh.isRefreshing = loadState.mediator?.refresh is LoadState.Loading
             binding.progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
             // Show the retry state if initial load or refresh fails.
             binding.retryButton.isVisible = loadState.mediator?.refresh is LoadState.Error
