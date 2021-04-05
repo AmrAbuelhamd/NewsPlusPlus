@@ -1,4 +1,4 @@
-package com.blogspot.soyamr.newsplusplus.app.articls
+package com.blogspot.soyamr.newsplusplus.presentation.news
 
 import android.os.Bundle
 import android.view.View
@@ -11,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.blogspot.soyamr.newsplusplus.R
-import com.blogspot.soyamr.newsplusplus.app.adapters.NewsAdapter
-import com.blogspot.soyamr.newsplusplus.app.adapters.ReposLoadStateAdapter
+import com.blogspot.soyamr.newsplusplus.presentation.news.adapters.news_list_adapter.NewsAdapter
+import com.blogspot.soyamr.newsplusplus.presentation.news.adapters.news_load_state_adapter.NewsLoadStateAdapter
 import com.blogspot.soyamr.newsplusplus.databinding.FragmentNewsListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -68,8 +68,8 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
 
     private fun initAdapter() {
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
-            header = ReposLoadStateAdapter { adapter.retry() },
-            footer = ReposLoadStateAdapter { adapter.retry() }
+            header = NewsLoadStateAdapter { adapter.retry() },
+            footer = NewsLoadStateAdapter { adapter.retry() }
         )
         adapter.addLoadStateListener { loadState ->
 
@@ -111,6 +111,4 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
             binding.list.visibility = View.VISIBLE
         }
     }
-
-
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.blogspot.soyamr.newsplusplus.app.adapters
+package com.blogspot.soyamr.newsplusplus.presentation.news.adapters.news_load_state_adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blogspot.soyamr.newsplusplus.R
 import com.blogspot.soyamr.newsplusplus.databinding.ReposLoadStateFooterViewItemBinding
 
-class ReposLoadStateViewHolder(
+class NewsLoadStateViewHolder private constructor(
     private val binding: ReposLoadStateFooterViewItemBinding,
     retry: () -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
@@ -43,11 +43,11 @@ class ReposLoadStateViewHolder(
     }
 
     companion object {
-        fun create(parent: ViewGroup, retry: () -> Unit): ReposLoadStateViewHolder {
+        fun create(parent: ViewGroup, retry: () -> Unit): NewsLoadStateViewHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.repos_load_state_footer_view_item, parent, false)
             val binding = ReposLoadStateFooterViewItemBinding.bind(view)
-            return ReposLoadStateViewHolder(binding, retry)
+            return NewsLoadStateViewHolder(binding, retry)
         }
     }
 }

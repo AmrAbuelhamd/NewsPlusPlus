@@ -1,4 +1,4 @@
-package com.blogspot.soyamr.newsplusplus.app.adapters
+package com.blogspot.soyamr.newsplusplus.presentation.news.adapters.news_list_adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso
 /**
  * View Holder for a [Article] RecyclerView list item.
  */
-class NewsViewHolder(private val binding: ArticleViewItemBinding, private val onClick: (String) -> Unit) :
+class NewsViewHolder private constructor(private val binding: ArticleViewItemBinding, private val onClick: (String) -> Unit) :
     RecyclerView.ViewHolder(binding.root) {
 
 

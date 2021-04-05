@@ -1,4 +1,4 @@
-package com.blogspot.soyamr.newsplusplus.app.adapters
+package com.blogspot.soyamr.newsplusplus.presentation.news.adapters.news_list_adapter
 
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -8,10 +8,12 @@ import com.blogspot.soyamr.newsplusplus.domain.model.Article
 /**
  * Adapter for the list of articles.
  */
-class NewsAdapter(private val onClick: (String) -> Unit) : PagingDataAdapter<Article, NewsViewHolder>(UIMODEL_COMPARATOR) {
+class NewsAdapter(private val onClick: (String) -> Unit) : PagingDataAdapter<Article, NewsViewHolder>(
+    UIMODEL_COMPARATOR
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        return NewsViewHolder.create(parent,onClick)
+        return NewsViewHolder.create(parent, onClick)
     }
 
 

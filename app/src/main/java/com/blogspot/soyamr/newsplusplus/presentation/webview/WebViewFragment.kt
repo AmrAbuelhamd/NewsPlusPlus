@@ -1,4 +1,4 @@
-package com.blogspot.soyamr.newsplusplus.app
+package com.blogspot.soyamr.newsplusplus.presentation.webview
 
 import android.os.Bundle
 import android.view.View
@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.blogspot.soyamr.newsplusplus.R
 import com.blogspot.soyamr.newsplusplus.databinding.FragmentWebViewBinding
+import com.blogspot.soyamr.newsplusplus.presentation.WebViewFragmentArgs
 
 
 class WebViewFragment : Fragment(R.layout.fragment_web_view) {
