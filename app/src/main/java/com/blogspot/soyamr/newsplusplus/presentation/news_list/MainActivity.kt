@@ -1,4 +1,4 @@
-package com.blogspot.soyamr.newsplusplus.presentation
+package com.blogspot.soyamr.newsplusplus.presentation.news_list
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

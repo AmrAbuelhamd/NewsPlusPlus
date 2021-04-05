@@ -1,5 +1,5 @@
 
-package com.blogspot.soyamr.newsplusplus.presentation.news.adapters.news_load_state_adapter
+package com.blogspot.soyamr.newsplusplus.presentation.news_list.adapters.news_load_state_adapter
 
 import android.view.ViewGroup
 import androidx.paging.LoadState

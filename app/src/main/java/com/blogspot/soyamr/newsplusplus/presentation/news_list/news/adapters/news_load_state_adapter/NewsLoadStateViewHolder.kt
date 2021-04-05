@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.blogspot.soyamr.newsplusplus.presentation.news.adapters.news_load_state_adapter
+package com.blogspot.soyamr.newsplusplus.presentation.news_list.adapters.news_load_state_adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.blogspot.soyamr.newsplusplus.R

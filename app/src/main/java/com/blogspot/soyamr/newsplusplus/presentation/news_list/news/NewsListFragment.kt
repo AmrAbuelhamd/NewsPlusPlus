@@ -1,5 +1,6 @@
-package com.blogspot.soyamr.newsplusplus.presentation.news
+package com.blogspot.soyamr.newsplusplus.presentation.news_list.news
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -11,9 +12,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.blogspot.soyamr.newsplusplus.R
-import com.blogspot.soyamr.newsplusplus.presentation.news.adapters.news_list_adapter.NewsAdapter
-import com.blogspot.soyamr.newsplusplus.presentation.news.adapters.news_load_state_adapter.NewsLoadStateAdapter
 import com.blogspot.soyamr.newsplusplus.databinding.FragmentNewsListBinding
+import com.blogspot.soyamr.newsplusplus.presentation.image.ImageActivity
+import com.blogspot.soyamr.newsplusplus.presentation.news_list.NewsListFragmentDirections
+import com.blogspot.soyamr.newsplusplus.presentation.news_list.adapters.news_list_adapter.NewsAdapter
+import com.blogspot.soyamr.newsplusplus.presentation.news_list.adapters.news_load_state_adapter.NewsLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -41,8 +44,16 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
 
         initAdapter()
         getNews()
-        binding.retryButton.setOnClickListener { adapter.retry() }
+        setListeners()
         initSwipeRefresh()
+    }
+
+    private fun setListeners() {
+        binding.retryButton.setOnClickListener { adapter.retry() }
+
+        binding.floatingActionButton.setOnClickListener {
+            startActivity(Intent(requireContext(), ImageActivity::class.java))
+        }
     }
 
     private fun initSwipeRefresh() {

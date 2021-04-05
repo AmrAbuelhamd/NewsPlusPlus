@@ -19,4 +19,13 @@
         <item name="android:windowBackground">@drawable/cat</item>
     </style>
 
+    <style name="Theme.NewsPlusPlus.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.NewsPlusPlus.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.NewsPlusPlus.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

@@ -1,13 +1,10 @@
-package com.blogspot.soyamr.newsplusplus.presentation.news.adapters.news_list_adapter
+package com.blogspot.soyamr.newsplusplus.presentation.news_list.adapters.news_list_adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.blogspot.soyamr.newsplusplus.R
 import com.blogspot.soyamr.newsplusplus.databinding.ArticleViewItemBinding
 import com.blogspot.soyamr.newsplusplus.domain.model.Article
-import com.squareup.picasso.Picasso
 
 /**
  * View Holder for a [Article] RecyclerView list item.

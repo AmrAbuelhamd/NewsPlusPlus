@@ -1,4 +1,4 @@
-package com.blogspot.soyamr.newsplusplus.presentation.news
+package com.blogspot.soyamr.newsplusplus.presentation.news_list.news
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
