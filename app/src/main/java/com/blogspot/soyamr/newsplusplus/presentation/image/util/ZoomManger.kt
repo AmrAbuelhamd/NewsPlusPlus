@@ -19,7 +19,7 @@ class ZoomManger {
     private var isOutSide = false
     private var mode = NONE
     private val start = PointF()
-    private val mid = PointF()
+    val mid = PointF()
     private var oldDist = 1f
     private var xCoOrdinate = 0f
     private var yCoOrdinate: Float = 0f
@@ -77,6 +77,7 @@ class ZoomManger {
                     val newDist1 = spacing(event)
                     if (newDist1 > 10f) {
                         val scale: Float = newDist1 / oldDist * view.scaleX
+                        this.scale = scale
                         view.scaleX = scale
                         view.scaleY = scale
                     }
@@ -88,6 +89,9 @@ class ZoomManger {
             }
         }
     }
+
+    var scale = 0F
+        private set;
 
     private fun rotation(event: MotionEvent): Float {
         val deltaX = (event.getX(0) - event.getX(1)).toDouble()
