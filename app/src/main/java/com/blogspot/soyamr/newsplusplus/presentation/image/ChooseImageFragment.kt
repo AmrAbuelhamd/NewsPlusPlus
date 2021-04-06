@@ -1,83 +1,84 @@
 package com.blogspot.soyamr.newsplusplus.presentation.image
 
-import android.R.attr.data
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.blogspot.soyamr.newsplusplus.R
 import com.blogspot.soyamr.newsplusplus.databinding.FragmentChooseImageBinding
 import java.io.File
-import java.io.FileNotFoundException
 import java.io.IOException
-import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-const val GALLERY_REQUEST = 0
-
 class ChooseImageFragment : Fragment(R.layout.fragment_choose_image) {
 
     private val binding: FragmentChooseImageBinding by viewBinding()
+    lateinit var currentPhotoPath: String
+
+    private var takeImageLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                launchNextFragmentWithImage(File(currentPhotoPath).toURI().toString())
+            } else {
+                showErrorToUser(TAKE_PICTURE_ERROR)
+            }
+        }
+
+    private var pickImageLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                try {
+                    val imageUri: Uri = result.data?.data as Uri
+                    val imageUriString = imageUri.toString()
+                    launchNextFragmentWithImage(imageUriString)
+                } catch (e: Exception) {
+                    showErrorToUser(PICK_PICTURE_ERROR)
+                }
+            } else {
+                showErrorToUser(PICK_PICTURE_ERROR)
+            }
+        }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.chooseImageFromGalleryButtonView.setOnClickListener {
-            print("click!")
-            dispatchTakePictureIntent()
-        }
-        binding.TakePhotoButtonView.setOnClickListener {
             dispatchPickPictureIntent()
         }
+        binding.TakePhotoButtonView.setOnClickListener {
+            dispatchTakePictureIntent()
+        }
+    }
 
+    private fun showErrorToUser(error: String) {
+        Toast.makeText(requireContext(), error, Toast.LENGTH_LONG)
+            .show()
+    }
+
+
+    private fun launchNextFragmentWithImage(imagePathUriString: String) {
+        findNavController().navigate(
+            ChooseImageFragmentDirections.actionChooseImageFragmentToShowImageFragment(
+                imagePathUriString
+            )
+        )
     }
 
     private fun dispatchPickPictureIntent() {
         val photoPickerIntent = Intent(Intent.ACTION_PICK)
         photoPickerIntent.type = "image/*"
         pickImageLauncher.launch(photoPickerIntent)
-    }
-
-    var takeImageLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                // There are no request codes
-                setPic()
-            }
-        }
-
-    var pickImageLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                // There are no request codes
-                setPicFromUri(result)
-            }else{
-                Toast.makeText(requireContext(), "You haven't picked Image", Toast.LENGTH_LONG).show()
-            }
-        }
-
-    private fun setPicFromUri(result: ActivityResult) {
-            try {
-                val imageUri: Uri = result.data?.data as Uri
-                val imageStream: InputStream? = requireActivity().contentResolver.openInputStream(imageUri)
-                val selectedImage = BitmapFactory.decodeStream(imageStream)
-                binding.imageView.setImageBitmap(selectedImage)
-            } catch (e: FileNotFoundException) {
-                e.printStackTrace()
-                Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_LONG).show()
-            }
     }
 
     private fun dispatchTakePictureIntent() {
@@ -89,7 +90,7 @@ class ChooseImageFragment : Fragment(R.layout.fragment_choose_image) {
                     createImageFile()
                 } catch (ex: IOException) {
                     // Error occurred while creating the File
-                    Toast.makeText(requireContext(), "could't create image", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), CAN_NOT_CREATE_PICTURE_ERROR, Toast.LENGTH_SHORT)
                         .show()
                     null
                 }
@@ -104,14 +105,6 @@ class ChooseImageFragment : Fragment(R.layout.fragment_choose_image) {
                     takeImageLauncher.launch((takePictureIntent))
                 }
             }
-        }
-    }
-
-    lateinit var currentPhotoPath: String
-    private fun setPic() {
-        val bmOptions = BitmapFactory.Options()
-        BitmapFactory.decodeFile(currentPhotoPath, bmOptions)?.also { bitmap ->
-            binding.imageView.setImageBitmap(bitmap)
         }
     }
 

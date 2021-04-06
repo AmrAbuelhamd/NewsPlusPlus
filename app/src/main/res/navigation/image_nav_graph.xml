@@ -18,5 +18,8 @@
         android:id="@+id/showImageFragment"
         android:name="com.blogspot.soyamr.newsplusplus.presentation.image.ShowImageFragment"
         android:label="fragment_show_image"
-        tools:layout="@layout/fragment_show_image" />
+        tools:layout="@layout/fragment_show_image" >
+        <argument android:name="imageUri"
+            app:argType="string" />
+    </fragment>
 </navigation>
