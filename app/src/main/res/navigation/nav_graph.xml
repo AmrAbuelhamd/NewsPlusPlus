@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/newsListFragment"
-        android:name="com.blogspot.soyamr.newsplusplus.presentation.news_list.NewsListFragment"
+        android:name="com.blogspot.soyamr.newsplusplus.presentation.news_list.news.NewsListFragment"
         android:label="fragment_news_list"
         tools:layout="@layout/fragment_news_list">
         <action
@@ -16,31 +16,11 @@
     </fragment>
     <fragment
         android:id="@+id/webViewFragment"
-        android:name="com.blogspot.soyamr.newsplusplus.presentation.webview.WebViewFragment"
+        android:name="com.blogspot.soyamr.newsplusplus.presentation.news_list.webview.WebViewFragment"
         android:label="fragment_web_view"
         tools:layout="@layout/fragment_web_view">
         <argument
             android:name="webUrl"
             app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.blogspot.soyamr.newsplusplus.presentation.image.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
-        <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.blogspot.soyamr.newsplusplus.presentation.image.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>

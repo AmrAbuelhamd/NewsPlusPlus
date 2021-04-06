@@ -1,4 +1,4 @@
-package com.blogspot.soyamr.newsplusplus.presentation.news_list.adapters.news_list_adapter
+package com.blogspot.soyamr.newsplusplus.presentation.news_list.news.adapters.news_list_adapter
 
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/chooseImageFragment"
-        android:name="com.blogspot.soyamr.newsplusplus.ChooseImageFragment"
+        android:name="com.blogspot.soyamr.newsplusplus.presentation.image.ChooseImageFragment"
         android:label="fragment_choose_image"
         tools:layout="@layout/fragment_choose_image" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/showImageFragment"
-        android:name="com.blogspot.soyamr.newsplusplus.ShowImageFragment"
+        android:name="com.blogspot.soyamr.newsplusplus.presentation.image.ShowImageFragment"
         android:label="fragment_show_image"
         tools:layout="@layout/fragment_show_image" />
 </navigation>
