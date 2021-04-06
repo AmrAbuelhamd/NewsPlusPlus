@@ -51,7 +51,7 @@ class ShowImageFragment : Fragment(R.layout.fragment_show_image) {
 
         binding.seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, b: Boolean) {
-                val scale = progress / 10.0f + zoom.scale
+                val scale = progress / 10.0f + zoom.scale + 1
                 binding.imageView2.scaleX = scale
                 binding.imageView2.scaleY = scale
 
