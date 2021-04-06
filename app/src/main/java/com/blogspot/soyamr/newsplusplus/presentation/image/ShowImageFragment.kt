@@ -1,7 +1,6 @@
 package com.blogspot.soyamr.newsplusplus.presentation.image
 
 import android.annotation.SuppressLint
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -10,12 +9,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.blogspot.soyamr.newsplusplus.R
 import com.blogspot.soyamr.newsplusplus.databinding.FragmentShowImageBinding
 import com.blogspot.soyamr.newsplusplus.presentation.image.util.ImageUtils
 import com.blogspot.soyamr.newsplusplus.presentation.image.util.ZoomManger
-import java.io.InputStream
 
 class ShowImageFragment : Fragment(R.layout.fragment_show_image) {
 
@@ -46,6 +45,13 @@ class ShowImageFragment : Fragment(R.layout.fragment_show_image) {
             zoom.viewTransformation(imageView, event)
             true
         }
+        binding.toolbar2.setupWithNavController(findNavController())
 
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        binding.toolbar2.title = "Your Image"
     }
 }
