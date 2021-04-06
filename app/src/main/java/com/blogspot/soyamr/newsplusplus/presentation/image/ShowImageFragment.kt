@@ -13,6 +13,8 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.blogspot.soyamr.newsplusplus.R
 import com.blogspot.soyamr.newsplusplus.databinding.FragmentShowImageBinding
+import com.blogspot.soyamr.newsplusplus.presentation.image.util.ImageUtils
+import com.blogspot.soyamr.newsplusplus.presentation.image.util.ZoomManger
 import java.io.InputStream
 
 class ShowImageFragment : Fragment(R.layout.fragment_show_image) {
@@ -30,16 +32,14 @@ class ShowImageFragment : Fragment(R.layout.fragment_show_image) {
         val imageUri = Uri.parse(imageUriString)
 
         try {
-            val imageStream: InputStream? =
-                requireActivity().contentResolver.openInputStream(imageUri)
-            val selectedImage = BitmapFactory.decodeStream(imageStream)
-            binding.imageView2.setImageBitmap(selectedImage)
+            val resultImage = ImageUtils.handleSamplingAndRotationBitmap(requireContext(), imageUri)
+            binding.imageView2.setImageBitmap(resultImage)
         } catch (e: Exception) {
             e.printStackTrace()
             Toast.makeText(requireContext(), SOMETHING_WENT_WRONG, Toast.LENGTH_LONG).show()
             findNavController().popBackStack()
         }
-        val zoom = ZoomView()
+        val zoom = ZoomManger()
         binding.imageView2.setOnTouchListener { v, event ->
             val imageView: ImageView = v as ImageView
             imageView.bringToFront()
