@@ -22,7 +22,7 @@ class NewsViewHolder private constructor(private val binding: ArticleViewItemBin
                 titleTextView.text = it.title
                 descriptionTextView.text =
                     HtmlCompat.fromHtml(it.description, HtmlCompat.FROM_HTML_MODE_COMPACT)
-                Picasso.get().load(it.urlToImage).placeholder(R.drawable.no_image).into(imageView)
+                Picasso.get().load(it.urlToImage).placeholder(R.drawable.no_image2).into(imageView)
                 dateTextView.text = it.publishedAt
                 val webUrl = it.url
                 root.setOnClickListener { onClick(webUrl) }

@@ -87,6 +87,12 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
             val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
             showEmptyList(isListEmpty)
 
+            if (loadState.source.append is LoadState.NotLoading &&
+                loadState.source.append.endOfPaginationReached && adapter.itemCount == 100
+            ) {
+                showError("Loaded all data")
+            }
+
             // Only show the list if refresh succeeds.
             binding.list.isVisible = loadState.mediator?.refresh is LoadState.NotLoading
             // Show loading spinner during initial load or refresh.
@@ -100,16 +106,20 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
                 ?: loadState.append as? LoadState.Error
                 ?: loadState.prepend as? LoadState.Error
             errorState?.let {
-                toast?.cancel()
-                toast = Toast.makeText(
-                    requireContext(),
-                    "\uD83D\uDE28 Wooops ${it.error}",
-                    Toast.LENGTH_SHORT
-                )
-                toast?.show()
+                showError("\uD83D\uDE28 Wooops" + it.error.message!!)
 
             }
         }
+    }
+
+    private fun showError(error: String) {
+        toast?.cancel()
+        toast = Toast.makeText(
+            requireContext(),
+            error,
+            Toast.LENGTH_SHORT
+        )
+        toast?.show()
     }
 
     private fun showEmptyList(show: Boolean) {

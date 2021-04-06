@@ -11,6 +11,7 @@ import com.blogspot.soyamr.newsplusplus.data.db.model.RemoteKeys
 import com.blogspot.soyamr.newsplusplus.data.network.NewsApi
 import retrofit2.HttpException
 import java.io.IOException
+import java.lang.Exception
 
 private const val NEWS_STARTING_PAGE_INDEX = 1
 
@@ -82,10 +83,8 @@ class NewsRemoteMediator(
                 }
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
-        } catch (exception: IOException) {
-            return MediatorResult.Error(exception)
-        } catch (exception: HttpException) {
-            return MediatorResult.Error(exception)
+        } catch (exception: Exception) {
+            return MediatorResult.Error(Exception("No Internet Connection"))
         }
     }
 
